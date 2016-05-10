@@ -1,0 +1,2 @@
+class BlogMailer < ApplicationMailer
+end
