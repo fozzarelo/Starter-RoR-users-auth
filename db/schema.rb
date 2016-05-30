@@ -11,10 +11,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160510072653) do
+ActiveRecord::Schema.define(version: 20160530214627) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "auctions", force: :cascade do |t|
+    t.string   "title"
+    t.text     "details"
+    t.date     "end_date"
+    t.float    "reserve_price"
+    t.float    "highest_bid"
+    t.integer  "user_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "aasm_state"
+  end
+
+  add_index "auctions", ["aasm_state"], name: "index_auctions_on_aasm_state", using: :btree
+  add_index "auctions", ["user_id"], name: "index_auctions_on_user_id", using: :btree
+
+  create_table "bids", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "auction_id"
+    t.float    "bid_amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "bids", ["auction_id"], name: "index_bids_on_auction_id", using: :btree
+  add_index "bids", ["user_id"], name: "index_bids_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
@@ -26,4 +52,7 @@ ActiveRecord::Schema.define(version: 20160510072653) do
     t.boolean  "admin"
   end
 
+  add_foreign_key "auctions", "users"
+  add_foreign_key "bids", "auctions"
+  add_foreign_key "bids", "users"
 end

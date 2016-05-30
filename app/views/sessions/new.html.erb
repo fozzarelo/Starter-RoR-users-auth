@@ -3,7 +3,8 @@
 <%= form_tag sessions_path do %>
   <div>
     <%= label_tag :email %>
-    <%= email_field_tag :email %>
+    <!-- TODO for now i'll remove the email validation -->
+    <%= text_field_tag :email %>
   </div>
   <div>
     <%= label_tag :password %>

@@ -1,24 +1,22 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>First name:</strong>
+  <strong>Hi:</strong>
   <%= @user.first_name %>
+  <strong>Here are your bids:</strong>
 </p>
-
 <p>
-  <strong>Last name:</strong>
-  <%= @user.last_name %>
-</p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
+<h2>Current Bids</h2>
+  <% @user.bids.each do |b| %>
+     <p>
+         Your bid amount for:
+          <%= b.auction.title %>
+        is:
+         <%= b.bid_amount %>$
+        - The highest bid for that auction is:
+          <%= b.auction.highest_bid %>$
+      </p>
+  <% end %>
 
-<p>
-  <strong>Password digest:</strong>
-  <%= @user.password_digest %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
